@@ -1,0 +1,40 @@
+name: Java CI with Maven
+
+env:
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: password
+  POSTGRES_URL: jdbc:postgresql://localhost:${POSTGRES_LOCAL_PORT}/${POSTGRES_DATABASE}
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14.1-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DATABASE: postgres
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+      - uses: actions/checkout@v2
+      - name: Init database
+        run: |
+          psql -h 127.0.0.1 -U postgres -d postgres -a -f src/main/resources/init.sql
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17-ea'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build backend application
+        run: mvn install --file pom.xml
