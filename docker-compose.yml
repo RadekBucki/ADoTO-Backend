@@ -7,12 +7,15 @@ services:
     ports:
       - '${POSTGRES_LOCAL_PORT}:${POSTGRES_DOCKER_PORT}'
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready"]
+      test: [ "CMD-SHELL", "pg_isready" ]
       timeout: 20s
       retries: 10
     volumes:
       - ./src/main/resources/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./src/main/resources/testData.sql:/docker-entrypoint-initdb.d/testData.sql
+    networks:
+      cluster_adoto-backed_c_net:
+        ipv4_address: '${POSTGRES_IP_ADDRESS}'
   app:
     depends_on:
       db:
@@ -24,5 +27,16 @@ services:
       - '${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}'
     volumes:
       - .m2:/root/.m2
+    networks:
+      cluster_adoto-backed_c_net:
+        ipv4_address: '${SPRING_IP_ADDRESS}'
+
 volumes:
   db:
+
+networks:
+  cluster_adoto-backed_c_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: '${SUBNET}'
