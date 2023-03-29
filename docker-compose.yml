@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   db:
-    image: postgres:14.1-alpine
+    image: postgis/postgis:14-3.3
     restart: unless-stopped
     env_file: .env
     ports:
