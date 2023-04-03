@@ -13,11 +13,24 @@ services:
     volumes:
       - ./src/main/resources/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./src/main/resources/testData.sql:/docker-entrypoint-initdb.d/testData.sql
+  ai:
+    build: ./Prediction
+    container_name: prediction_module
+    env_file: .env
+    environment:
+      - DB_SERVER={database_name}
+    ports:
+      - '${PREDICTION_LOCAL_PORT}:${PREDICTION_DOCKER_PORT}'
+    links:
+      - backend(?)
+    networks:
+      customnetwork:
+        ipv4_address: { ip }
   app:
     depends_on:
       db:
         condition: service_healthy
-    build: .
+    build: .s
     env_file: .env
     restart: unless-stopped
     ports:
