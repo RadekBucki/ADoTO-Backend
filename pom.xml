@@ -23,6 +23,7 @@
         <springdoc-openapi-starter-webmvc-ui.version>2.0.2</springdoc-openapi-starter-webmvc-ui.version>
         <lombok.version>1.18.24</lombok.version>
         <postgres.version>42.5.4</postgres.version>
+        <hibernate.version>6.1.5.Final</hibernate.version>
     </properties>
 
     <dependencies>
@@ -81,6 +82,18 @@
             <version>${postgres.version}</version>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-spatial</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
