@@ -1,1 +1,0 @@
-INSERT INTO test values (1, 'test');
