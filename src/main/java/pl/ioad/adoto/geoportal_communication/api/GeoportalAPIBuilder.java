@@ -7,9 +7,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jaxb.JaxbConverterFactory;
 
 @Component
-public class ApiBuilder {
+public class GeoportalAPIBuilder {
 
-    private ApiBuilder() {
+    private GeoportalAPIBuilder() {
     }
 
     public static GeoportalAPI build() {

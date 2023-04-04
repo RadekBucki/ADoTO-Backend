@@ -11,7 +11,7 @@ public class GeoportalCommunicationFacadeImpl implements GeoportalCommunicationF
 
     private final GeoportalService geoportalService;
     @Override
-    public SatelliteImage getSatelliteImage() {
-        return geoportalService.getSatelliteImage();
+    public SatelliteImage getSatelliteImage(double height, double width, double minx, double miny, double maxx, double maxy) {
+        return geoportalService.getSatelliteImage(height, width, minx, miny, maxx, maxy);
     }
 }

@@ -16,7 +16,7 @@ public class Controller {
 
     @GetMapping
     public ResponseEntity<SatelliteImage> get() {
-        return ResponseEntity.ok(gcf.getSatelliteImage());
+        return ResponseEntity.ok(gcf.getSatelliteImage(1000, 2000, 431970,538000,432030,538120));
     }
 
 }
