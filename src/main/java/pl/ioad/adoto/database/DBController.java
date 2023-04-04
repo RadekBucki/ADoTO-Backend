@@ -1,27 +1,27 @@
 package pl.ioad.adoto.database;
 
-import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.MultiPolygon;
-import org.locationtech.jts.geom.Polygon;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import pl.ioad.adoto.database.dto.BuildingDTO;
 
-import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("/db")
 public class DBController {
 
     @Autowired
-    private TopObjectRepository repository;
+    private DBService dbService;
 
-    @PostMapping
-    public TopObject saveData(@RequestBody TopObject topObject) {
-        return repository.save(topObject);
+    @PostMapping("/buildings")
+    public ResponseEntity<List<BuildingDTO>> getAllBuildingsInBoundingBox(@RequestParam Double minX,
+                                                                          @RequestParam Double minY,
+                                                                          @RequestParam Double maxX,
+                                                                          @RequestParam Double maxY,
+                                                                          @RequestParam Integer srId) {
+        return new ResponseEntity<>(dbService.findAllInBoundingBox(minX, minY, maxX, maxY, srId),
+                HttpStatusCode.valueOf(200));
     }
-
 }
