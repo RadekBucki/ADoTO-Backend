@@ -24,6 +24,7 @@
         <lombok.version>1.18.24</lombok.version>
         <postgres.version>42.5.4</postgres.version>
         <hibernate.version>6.1.5.Final</hibernate.version>
+        <retrofit.version>2.9.0</retrofit.version>
     </properties>
 
     <dependencies>
@@ -56,7 +57,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -75,7 +75,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -92,8 +91,16 @@
             <artifactId>hibernate-spatial</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>com.squareup.retrofit2</groupId>
+            <artifactId>retrofit</artifactId>
+            <version>${retrofit.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.retrofit2</groupId>
+            <artifactId>converter-jaxb</artifactId>
+            <version>${retrofit.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

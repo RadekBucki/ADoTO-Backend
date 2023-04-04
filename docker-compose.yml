@@ -12,6 +12,12 @@ services:
       retries: 10
     volumes:
       - ./src/main/resources/buildings.sql:/docker-entrypoint-initdb.d/buildings.sql
+  ai:
+    build: ../ADoTO-AI
+    container_name: prediction_module
+    env_file: .env
+    links:
+      - app
   app:
     depends_on:
       db:
