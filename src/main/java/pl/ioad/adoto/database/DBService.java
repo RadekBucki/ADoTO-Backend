@@ -12,12 +12,11 @@ public class DBService {
     @Autowired
     private TopObjectRepository repository;
 
-    public List<BuildingDTO> findAllInBoundingBox(Double minX, Double minY, Double maxX, Double maxY, Integer srId) {
+    public List<BuildingDTO> findAllInBoundingBox(Double minX, Double minY, Double maxX, Double maxY) {
         List<BuildingDTO> buildingDTOS = new ArrayList<>();
 
-        repository.findIntersectingEntities(minX, minY, maxX, maxY, srId).forEach(e -> {
-            buildingDTOS.add(new BuildingDTO(e.getId(), GeometryMapper.mapMultiPolygonToDto(e.getGeometry())));
-        });
+        repository.findIntersectingEntities(minX, minY, maxX, maxY).forEach(e ->
+                buildingDTOS.add(new BuildingDTO(e.getId(), GeometryMapper.mapMultiPolygonToDto(e.getGeometry()))));
 
         return buildingDTOS;
     }

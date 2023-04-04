@@ -11,11 +11,10 @@ import java.util.List;
 
 @Repository
 public interface TopObjectRepository extends JpaRepository<Building, Long> {
-    @Query(value = "SELECT * FROM first " +
-            "WHERE ST_Intersects(wkb_geometry, ST_MakeEnvelope(:minX, :minY, :maxX, :maxY, :srId))",
+    @Query(value = "SELECT * FROM buildings " +
+            "WHERE ST_Intersects(wkb_geometry, ST_MakeEnvelope(:minX, :minY, :maxX, :maxY, 4326))",
             nativeQuery = true)
     List<Building> findIntersectingEntities(@Param("minX") double x1, @Param("minY") double y1,
-                                            @Param("maxX") double x2, @Param("maxY") double y2,
-                                            @Param("srId") int srId);
+                                            @Param("maxX") double x2, @Param("maxY") double y2);
 
 }
