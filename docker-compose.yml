@@ -13,6 +13,12 @@ services:
     volumes:
       - ./src/main/resources/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./src/main/resources/testData.sql:/docker-entrypoint-initdb.d/testData.sql
+  ai:
+    build: ../ADoTO-AI
+    container_name: prediction_module
+    env_file: .env
+    links:
+      - app
   app:
     depends_on:
       db:
