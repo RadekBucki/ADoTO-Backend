@@ -1,19 +1,19 @@
-package pl.ioad.adoto.geoportal_communication.service;
+package pl.ioad.adoto.communication.geoportal.service;
 
 import okhttp3.ResponseBody;
 import org.springframework.stereotype.Service;
-import pl.ioad.adoto.geoportal_communication.api.GeoportalAPIBuilder;
-import pl.ioad.adoto.geoportal_communication.api.GeoportalAPI;
-import pl.ioad.adoto.geoportal_communication.exception.GeoportalTimeoutException;
-import pl.ioad.adoto.geoportal_communication.exception.WrongInputDataException;
-import pl.ioad.adoto.geoportal_communication.model.SatelliteImage;
+import pl.ioad.adoto.communication.geoportal.api.GeoportalAPI;
+import pl.ioad.adoto.communication.geoportal.api.GeoportalAPIBuilder;
+import pl.ioad.adoto.communication.geoportal.exception.GeoportalTimeoutException;
+import pl.ioad.adoto.communication.geoportal.exception.WrongInputDataException;
+import pl.ioad.adoto.communication.geoportal.model.SatelliteImage;
 import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.Base64;
 
 @Service
-public class GeoportalService {
+public class GeoportalAPIService {
 
     private final GeoportalAPI geoportalAPI = GeoportalAPIBuilder.build();
 
@@ -38,9 +38,9 @@ public class GeoportalService {
             if (response.isSuccessful() && response.body() != null) {
                 base64Image = Base64.getEncoder().encodeToString(response.body().bytes());
             }
-            return new SatelliteImage(
-                    base64Image
-            );
+            return SatelliteImage.builder()
+                    .base64(base64Image)
+                    .build();
         } catch (IOException e) {
             throw new GeoportalTimeoutException(e.getMessage());
         }

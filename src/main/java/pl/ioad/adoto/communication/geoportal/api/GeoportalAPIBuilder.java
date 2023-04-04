@@ -1,4 +1,4 @@
-package pl.ioad.adoto.geoportal_communication.api;
+package pl.ioad.adoto.communication.geoportal.api;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

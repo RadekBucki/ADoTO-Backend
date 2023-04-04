@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import pl.ioad.adoto.backend.exception.handler.response.ErrorResponse;
-import pl.ioad.adoto.geoportal_communication.exception.GeoportalTimeoutException;
-import pl.ioad.adoto.geoportal_communication.exception.WrongInputDataException;
+import pl.ioad.adoto.communication.geoportal.exception.GeoportalTimeoutException;
+import pl.ioad.adoto.communication.geoportal.exception.WrongInputDataException;
 
 import java.util.HashMap;
 import java.util.Map;

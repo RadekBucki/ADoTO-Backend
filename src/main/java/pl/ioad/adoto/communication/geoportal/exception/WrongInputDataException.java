@@ -1,4 +1,4 @@
-package pl.ioad.adoto.geoportal_communication.exception;
+package pl.ioad.adoto.communication.geoportal.exception;
 
 public class WrongInputDataException extends RuntimeException {
     public WrongInputDataException(String message) {
