@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.ioad.adoto.geoportal_communication.model.SatelliteImage;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,9 +15,8 @@ public class Controller {
     private final GeoportalCommunicationFacade gcf;
 
     @GetMapping
-    public ResponseEntity<String> get() {
-        gcf.test();
-        return ResponseEntity.ok("dupa");
+    public ResponseEntity<SatelliteImage> get() {
+        return ResponseEntity.ok(gcf.getSatelliteImage());
     }
 
 }

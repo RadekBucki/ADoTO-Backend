@@ -3,7 +3,6 @@ package pl.ioad.adoto.geoportal_communication.api;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import org.springframework.stereotype.Component;
-import pl.ioad.adoto.geoportal_communication.api.GeoportalAPI;
 import retrofit2.Retrofit;
 import retrofit2.converter.jaxb.JaxbConverterFactory;
 
