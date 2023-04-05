@@ -10,6 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BuildingDTO {
-    Integer id;
-    GeometryDTO geometry;
+    private Integer id;
+    private GeometryDTO geometry;
 }

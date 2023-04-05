@@ -10,6 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GeometryDTO {
-    Double[][] coordinates;
-    String type;
+    private Double[][] coordinates;
+    private String type;
 }
