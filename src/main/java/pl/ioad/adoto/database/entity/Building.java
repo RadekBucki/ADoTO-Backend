@@ -15,18 +15,5 @@ import org.locationtech.jts.geom.Geometry;
 
 
 @Entity
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "buildings")
-public class Building {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ogc_fid")
-    private Integer id;
-
-    @JsonIgnore
-    @Column(name = "wkb_geometry", columnDefinition = "geometry")
-    private Geometry geometry;
-
-}
+public final class Building extends TopEntity { }

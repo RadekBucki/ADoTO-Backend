@@ -5,11 +5,4 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-public class GeometryDTO {
-    private Double[][] coordinates;
-    private String type;
-}
+public record GeometryDTO (double[][] coordinates, String type) { }
