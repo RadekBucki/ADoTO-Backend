@@ -4,5 +4,6 @@ public enum EntitiesType {
     BUILDINGS,
     RIVERS,
     ROADS,
-    FORESTS
+    FORESTS,
+    FIELDS
 }

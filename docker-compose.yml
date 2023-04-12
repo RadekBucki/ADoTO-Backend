@@ -15,14 +15,15 @@ services:
       - ./src/main/resources/roads.sql:/docker-entrypoint-initdb.d/roads.sql
       - ./src/main/resources/rivers.sql:/docker-entrypoint-initdb.d/rivers.sql
       - ./src/main/resources/forests.sql:/docker-entrypoint-initdb.d/forests.sql
+      - ./src/main/resources/fields.sql:/docker-entrypoint-initdb.d/fields.sql
       - ./src/main/resources/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./src/main/resources/testData.sql:/docker-entrypoint-initdb.d/testData.sql
-#  ai:
-#    build: ../ADoTO-AI
-#    container_name: prediction_module
-#    env_file: .env
-#    links:
-#      - app
+  ai:
+    build: ../ADoTO-AI
+    container_name: prediction_module
+    env_file: .env
+    links:
+      - app
   app:
     depends_on:
       db:
