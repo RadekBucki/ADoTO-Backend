@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.ioad.adoto.database.dto.TopObjectDTO;
+import pl.ioad.adoto.database.entity.EntitiesType;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class DBController {
     private final DBService dbService;
 
     @PostMapping("/{entitiesType}")
-    public ResponseEntity<List<TopObjectDTO>> getAllEntitiesInBoundingBox(@PathVariable DBService.EntitiesType entitiesType,
+    public ResponseEntity<List<TopObjectDTO>> getAllEntitiesInBoundingBox(@PathVariable EntitiesType entitiesType,
                                                                           @RequestParam Double minX,
                                                                           @RequestParam Double minY,
                                                                           @RequestParam Double maxX,
