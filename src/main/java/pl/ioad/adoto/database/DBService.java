@@ -25,14 +25,13 @@ public class DBService {
                                                    Double maxY) {
 
         List<TopObjectDTO> topObjectDTOs = new ArrayList<>();
-        var repository = switch (entitiesType) {
-            case BUILDINGS -> buildingsRepository;
-            case RIVERS -> riversRepository;
+        var intersectingEntities = switch (entitiesType) {
+            case BUILDINGS -> buildingsRepository.findIntersectingBuildings(minX, minY, maxX, maxY);
+            case RIVERS -> riversRepository.findIntersectingRivers(minX, minY, maxX, maxY);
         };
-        repository.findIntersectingEntities(minX, minY, maxX, maxY)
-                .forEach(e ->
-                        topObjectDTOs.add(
-                                new TopObjectDTO(e.getId(), mapObjectToDto(e.getGeometry()))));
+        intersectingEntities.forEach(e ->
+                topObjectDTOs.add(
+                        new TopObjectDTO(e.getId(), mapObjectToDto(e.getGeometry()))));
         return topObjectDTOs;
     }
 
