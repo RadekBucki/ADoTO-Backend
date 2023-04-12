@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.ioad.adoto.database.dto.TopObjectDTO;
 import pl.ioad.adoto.database.entity.Building;
 import pl.ioad.adoto.database.entity.River;
+import pl.ioad.adoto.database.entity.Road;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ public class DBService {
 
     private final TopObjectRepository<Building> buildingsRepository;
     private final TopObjectRepository<River> riversRepository;
+    private final TopObjectRepository<Road> roadsRepository;
 
     public List<TopObjectDTO> findAllInBoundingBox(EntitiesType entitiesType,
                                                    Double minX,
@@ -28,6 +30,7 @@ public class DBService {
         var intersectingEntities = switch (entitiesType) {
             case BUILDINGS -> buildingsRepository.findIntersectingBuildings(minX, minY, maxX, maxY);
             case RIVERS -> riversRepository.findIntersectingRivers(minX, minY, maxX, maxY);
+            case ROADS -> roadsRepository.findIntersectingRoads(minX, minY, maxX, maxY);
         };
         intersectingEntities.forEach(e ->
                 topObjectDTOs.add(
@@ -37,7 +40,8 @@ public class DBService {
 
     public enum EntitiesType {
         BUILDINGS,
-        RIVERS
+        RIVERS,
+        ROADS
     }
 }
 
