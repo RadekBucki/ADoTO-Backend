@@ -1,8 +1,8 @@
 package pl.ioad.adoto.database.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.springframework.data.util.Pair;
 
-public record GeometryDTO (double[][] coordinates, String type) { }
+import java.util.List;
+
+public record GeometryDTO(List<Pair<Double, Double>> coordinates, String type) {
+}

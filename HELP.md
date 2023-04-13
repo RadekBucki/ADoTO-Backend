@@ -2,6 +2,12 @@
 
 To start application there are two options:
 
+## Prerequisites
+
+To properly run application, you have to upload SQL scripts, which will initialize database with required topographic objects.
+What you need to do is to select a district from [here](https://tulodz-my.sharepoint.com/personal/236507_edu_p_lodz_pl/_layouts/15/onedrive.aspx?ga=1&id=%2Fpersonal%2F236507%5Fedu%5Fp%5Flodz%5Fpl%2FDocuments%2FIOAD%2Fadoto&view=0)
+and extract the content of the corresponding directory to `src/main/resources` directory.
+
 ## 1.) Database docker + Local Spring backend
 
 To start database on docker use command:

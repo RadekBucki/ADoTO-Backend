@@ -7,4 +7,5 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "forests")
 @DiscriminatorValue("Forest")
-public class Forest extends TopEntity { }
+public class Forest extends TopEntity {
+}

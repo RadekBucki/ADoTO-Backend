@@ -9,4 +9,5 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "buildings")
 @DiscriminatorValue("Building")
-public class Building extends TopEntity { }
+public class Building extends TopEntity {
+}
