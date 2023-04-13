@@ -1,15 +1,7 @@
 package pl.ioad.adoto.database.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.awt.geom.Point2D;
+import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-public class GeometryDTO {
-    private Double[][] coordinates;
-    private String type;
+public record GeometryDTO(List<Point2D.Double> coordinates, String type) {
 }
