@@ -3,6 +3,7 @@ package pl.ioad.adoto.database.dto;
 import org.locationtech.jts.geom.Geometry;
 import org.springframework.data.util.Pair;
 
+import java.awt.geom.Point2D;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -13,7 +14,7 @@ public class GeometryMapper {
             throw new IllegalArgumentException("Unsupported geometry type: " + geometry.getGeometryType());
 
         var coordinates = Arrays.stream(geometry.getCoordinates())
-                .map(coordinate -> Pair.of(coordinate.x, coordinate.y))
+                .map(coordinate -> new Point2D.Double(coordinate.x, coordinate.y))
                 .toList();
 
         return new GeometryDTO(coordinates, geometry.getGeometryType());
