@@ -34,3 +34,10 @@ build/
 /mvnw
 /mvnw.cmd
 /.m2
+
+### DB entities ###
+/src/main/resources/buildings.sql
+/src/main/resources/fields.sql
+/src/main/resources/forests.sql
+/src/main/resources/rivers.sql
+/src/main/resources/roads.sql
