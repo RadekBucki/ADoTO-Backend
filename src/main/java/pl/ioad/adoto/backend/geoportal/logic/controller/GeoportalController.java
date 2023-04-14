@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.ioad.adoto.backend.geoportal.logic.model.dto.SatelliteImageDto;
 import pl.ioad.adoto.backend.geoportal.logic.service.GeoportalService;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/satellite")
@@ -53,20 +55,24 @@ public class GeoportalController {
             }),
     })
     @GetMapping
-    public ResponseEntity<SatelliteImageDto> get(
-            @Schema(description = "Height of the return image in pixels", example = "1000", requiredMode = Schema.RequiredMode.REQUIRED)
+    public ResponseEntity<List<SatelliteImageDto>> get(
+            @Schema(description = "Height of the initial image to be cropped in pixels", example = "4000", requiredMode = Schema.RequiredMode.REQUIRED)
             @RequestParam double height,
-            @Schema(description = "Width of the return image in pixels", example = "2000", requiredMode = Schema.RequiredMode.REQUIRED)
+            @Schema(description = "Width of the initial image to be cropped in pixels", example = "4000", requiredMode = Schema.RequiredMode.REQUIRED)
             @RequestParam double width,
+            @Schema(description = "Height of the return image in pixels", example = "1000", requiredMode = Schema.RequiredMode.REQUIRED)
+            @RequestParam double heightResult,
+            @Schema(description = "Width of the return image in pixels", example = "1000", requiredMode = Schema.RequiredMode.REQUIRED)
+            @RequestParam double widthResult,
             @Schema(description = "Bounding box bottom left corner x in EPSG:2180 standard", example = "431970", requiredMode = Schema.RequiredMode.REQUIRED)
             @RequestParam double minx,
             @Schema(description = "Bounding box bottom left corner y in EPSG:2180 standard", example = "538000", requiredMode = Schema.RequiredMode.REQUIRED)
             @RequestParam double miny,
-            @Schema(description = "Bounding box top right corner x in EPSG:2180 standard", example = "432030", requiredMode = Schema.RequiredMode.REQUIRED)
+            @Schema(description = "Bounding box top right corner x in EPSG:2180 standard", example = "432170", requiredMode = Schema.RequiredMode.REQUIRED)
             @RequestParam double maxx,
-            @Schema(description = "Bounding box top right corner y in EPSG:2180 standard", example = "538120", requiredMode = Schema.RequiredMode.REQUIRED)
+            @Schema(description = "Bounding box top right corner y in EPSG:2180 standard", example = "538200", requiredMode = Schema.RequiredMode.REQUIRED)
             @RequestParam double maxy) {
-        return ResponseEntity.ok(geoportalService.getSatelliteImage(height, width, minx, miny, maxx, maxy));
+        return ResponseEntity.ok(geoportalService.getSatelliteImage(height, width, heightResult, widthResult, minx, miny, maxx, maxy));
     }
 
 }
