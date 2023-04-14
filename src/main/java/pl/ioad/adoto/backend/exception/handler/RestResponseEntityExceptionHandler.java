@@ -13,6 +13,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import pl.ioad.adoto.backend.exception.handler.response.ErrorResponse;
 import pl.ioad.adoto.communication.geoportal.exception.GeoportalTimeoutException;
+import pl.ioad.adoto.communication.geoportal.exception.ResponseFailedException;
 import pl.ioad.adoto.communication.geoportal.exception.WrongInputDataException;
 
 import java.util.HashMap;
@@ -49,7 +50,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
                         HttpStatus.REQUEST_TIMEOUT.value(), Map.of(exc.getClass().getSimpleName(), exc.getMessage())));
     }
 
-    @ExceptionHandler({WrongInputDataException.class})
+    @ExceptionHandler({WrongInputDataException.class, ResponseFailedException.class})
     public ResponseEntity<ErrorResponse> handleWrongInputDataException(Exception exc) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse(exc.getMessage(),

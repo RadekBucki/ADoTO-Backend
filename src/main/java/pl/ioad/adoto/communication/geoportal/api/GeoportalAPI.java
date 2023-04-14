@@ -6,7 +6,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface GeoportalAPI {
-    @GET("/wss/service/PZGIK/ORTO/WMS/HighResolution/MapServer/WMSServer")
+    @GET("/wss/service/PZGIK/ORTO/WMS/StandardResolution/MapServer/WMSServer")
     Call<ResponseBody> getSatelliteImage(@Query("SERVICE") String service,
                                          @Query("REQUEST") String request,
                                          @Query("FORMAT") String format,
