@@ -1,6 +1,7 @@
 package pl.ioad.adoto.communication.geoportal.service;
 
 import okhttp3.ResponseBody;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pl.ioad.adoto.communication.geoportal.api.BDot10kAPI;
 import pl.ioad.adoto.communication.geoportal.api.BDot10kAPIBuilder;
@@ -13,7 +14,6 @@ import retrofit2.Response;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,6 +29,10 @@ public class BDot10kAPIService {
         if (((maxx - minx) / (maxy - miny)) != height / width) {
             throw new WrongInputDataException("BBOX and width/height ratio is different!");
         }
+        StringBuilder style = new StringBuilder();
+        int howMany = StringUtils.countMatches(layer, ",");
+        style.append("default,".repeat(Math.max(1, howMany + 1)));
+        style.deleteCharAt(style.length() - 1);
         try {
             Response<ResponseBody> response = bDot10kAPI.getSvgObjects(
                     "WMS",
@@ -36,7 +40,7 @@ public class BDot10kAPIService {
                     "image/svg+xml",
                     "1.3",
                     layer,
-                    "default",
+                    style.toString(),
                     minx + "," + miny + "," + maxx + "," + maxy,
                     "EPSG:2180",
                     String.valueOf(width),
@@ -48,14 +52,17 @@ public class BDot10kAPIService {
 
             String body = response.body().string();
             String[] split = body.split("<g id");
-            int index = split[split.length - 1].indexOf("\n");
-            String filterMes = split[split.length - 1].substring(index + 1);
-            List<String> elements = Arrays.stream(filterMes.split("<g\\s"))
-                    .filter(x -> !x.isEmpty())
-                    .toList();
+            List<String> elements = Arrays.asList(split);
+            elements = elements.stream().filter(x -> x.contains("path")).toList();
+
+            List<String> splitElements = new ArrayList<>();
+            for (String elem : elements) {
+                splitElements.addAll(List.of(elem.split("<g\\s")));
+            }
+            splitElements = splitElements.stream().filter(x -> !x.isEmpty()).toList();
             List<SvgObject> objects = new ArrayList<>();
 
-            for (String element : elements) {
+            for (String element : splitElements) {
                 try {
                     objects.add(SvgObject.builder()
                             .transform(getAttributeValue(element, "transform"))
@@ -63,8 +70,8 @@ public class BDot10kAPIService {
                                             .split("\\s"))
                                     .toList())
                             .build());
-                } catch (NullPointerException e) {
-                    return Collections.emptyList();
+                } catch (Exception ignored) {
+
                 }
             }
 
