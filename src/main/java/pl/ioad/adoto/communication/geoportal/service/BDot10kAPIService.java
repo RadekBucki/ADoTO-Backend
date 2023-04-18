@@ -13,6 +13,7 @@ import retrofit2.Response;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,21 +46,26 @@ public class BDot10kAPIService {
                 throw new ResponseFailedException("Response failed!");
             }
 
-            String[] split = response.body().string().split("<g id");
-            int index = split[2].indexOf("\n");
-            String filterMes = split[2].substring(index+1);
+            String body = response.body().string();
+            String[] split = body.split("<g id");
+            int index = split[split.length - 1].indexOf("\n");
+            String filterMes = split[split.length - 1].substring(index + 1);
             List<String> elements = Arrays.stream(filterMes.split("<g\\s"))
                     .filter(x -> !x.isEmpty())
                     .toList();
             List<SvgObject> objects = new ArrayList<>();
 
             for (String element : elements) {
-                objects.add(SvgObject.builder()
-                        .transform(getAttributeValue(element, "transform"))
-                        .d(Arrays.stream(getAttributeValue(element, "d")
-                                .split("\\s"))
-                                .toList())
-                        .build());
+                try {
+                    objects.add(SvgObject.builder()
+                            .transform(getAttributeValue(element, "transform"))
+                            .d(Arrays.stream(getAttributeValue(element, "d")
+                                            .split("\\s"))
+                                    .toList())
+                            .build());
+                } catch (NullPointerException e) {
+                    return Collections.emptyList();
+                }
             }
 
             return objects;
