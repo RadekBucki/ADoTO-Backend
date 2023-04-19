@@ -26,24 +26,23 @@ public class SvgConverter {
         List<String> d = svgObject.d();
 
         for (int i = 0; i < d.size() - 1; i++) {
+            String result = d.get(i);
             if (i % 2 == 0) {
-                String result = d.get(i).substring(1, d.get(i).length() - 1);
-                coordinates.add(new BigDecimal(result));
-                continue;
+                result = d.get(i).substring(1, d.get(i).length() - 1);
             }
-            coordinates.add(new BigDecimal(d.get(i)));
+            coordinates.add(new BigDecimal(result));
         }
 
         List<SvgConvertResponse> response = new ArrayList<>();
 
         for (int i = 0; i < coordinates.size(); i += 2) {
             BigDecimal x = coordinates.get(i);
-            x.multiply(coefficientsList.get(0));
-            x.add(coefficientsList.get(4));
+            x = x.multiply(coefficientsList.get(0));
+            x = x.add(coefficientsList.get(4));
 
             BigDecimal y = coordinates.get(i + 1);
-            y.multiply(coefficientsList.get(3));
-            y.add(coefficientsList.get(5));
+            y = y.multiply(coefficientsList.get(3));
+            y = y.add(coefficientsList.get(5));
 
             response.add(new SvgConvertResponse(x, y));
         }
