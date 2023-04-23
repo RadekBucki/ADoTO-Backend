@@ -7,7 +7,6 @@ import pl.ioad.adoto.backend.geoportal.logic.model.dto.SatelliteImageDto;
 import pl.ioad.adoto.backend.svg.converter.SvgConverter;
 import pl.ioad.adoto.backend.svg.converter.model.SvgConvertResponse;
 import pl.ioad.adoto.communication.geoportal.GeoportalCommunicationFacade;
-import pl.ioad.adoto.communication.geoportal.model.SvgObject;
 
 import java.util.List;
 

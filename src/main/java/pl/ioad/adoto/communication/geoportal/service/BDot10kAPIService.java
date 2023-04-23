@@ -71,7 +71,7 @@ public class BDot10kAPIService {
                                     .toList())
                             .build());
                 } catch (Exception ignored) {
-
+                    // ignored
                 }
             }
 
