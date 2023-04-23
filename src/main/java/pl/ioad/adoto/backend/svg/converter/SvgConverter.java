@@ -1,5 +1,6 @@
 package pl.ioad.adoto.backend.svg.converter;
 
+import org.springframework.stereotype.Component;
 import pl.ioad.adoto.backend.svg.converter.model.SvgConvertResponse;
 import pl.ioad.adoto.communication.geoportal.model.SvgObject;
 
@@ -7,10 +8,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class SvgConverter {
 
     public List<List<SvgConvertResponse>> getCoordinates(List<SvgObject> svgObjects) {
-        return svgObjects.stream().map((this::getCoordinatesOfSpecificObject)).toList();
+        return svgObjects.parallelStream().map((this::getCoordinatesOfSpecificObject)).toList();
     }
 
     private List<SvgConvertResponse> getCoordinatesOfSpecificObject(SvgObject svgObject) {
