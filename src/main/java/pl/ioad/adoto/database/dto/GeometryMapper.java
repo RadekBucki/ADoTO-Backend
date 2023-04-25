@@ -1,7 +1,6 @@
 package pl.ioad.adoto.database.dto;
 
 import org.locationtech.jts.geom.Geometry;
-import org.springframework.data.util.Pair;
 
 import java.awt.geom.Point2D;
 import java.util.Arrays;

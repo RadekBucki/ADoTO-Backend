@@ -7,17 +7,14 @@ import retrofit2.converter.jaxb.JaxbConverterFactory;
 
 import java.util.concurrent.TimeUnit;
 
-public abstract class RetrofitAPI {
+public interface RetrofitAPI {
 
-    protected RetrofitAPI() {
-    }
-
-    public static Retrofit api() {
+    static Retrofit api() {
         return new Retrofit.Builder()
                 .baseUrl("https://mapy.geoportal.gov.pl")
                 .client(new OkHttpClient.Builder()
                         .connectTimeout(300, TimeUnit.SECONDS)
-                        .readTimeout(300,TimeUnit.SECONDS)
+                        .readTimeout(300, TimeUnit.SECONDS)
                         .addInterceptor(chain -> {
                             Request requestBuilder = chain.request().newBuilder()
                                     .addHeader("Accept", "application/json")

@@ -19,8 +19,8 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/satellite")
-public class GeoportalController {
+@RequestMapping("/geoportal/satellite")
+public class GeoportalSatelliteController {
 
     private final GeoportalService geoportalService;
 
