@@ -73,6 +73,35 @@ public class GeoportalSatelliteController {
         return ResponseEntity.ok(geoportalService.getSatelliteImagesCropped(width, heightResult, widthResult, minx, miny, maxx, maxy));
     }
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved question checks list for chosen audit"),
+            @ApiResponse(responseCode = "400", description = "BBOX coordinates has different ratio than requested image", content = {
+                    @Content(
+                            examples = {
+                                    @ExampleObject(
+                                            value = "{" +
+                                                    "\"message\": \"BBOX and width/height ratio is different!\"," +
+                                                    "\"statusCode\": \"400\"," +
+                                                    "\"errors\": {\"WrongInputDataException\": \"BBOX and width/height ratio is different!\"}" +
+                                                    "}"
+                                    )
+                            }
+                    )
+            }),
+            @ApiResponse(responseCode = "408", description = "Geoportal API timeout", content = {
+                    @Content(
+                            examples = {
+                                    @ExampleObject(
+                                            value = "{" +
+                                                    "\"message\": \"Geoportal API timeout\"," +
+                                                    "\"statusCode\": \"408\"," +
+                                                    "\"errors\": {\"GeoportalTimeoutException\": \"Error message\"}" +
+                                                    "}"
+                                    )
+                            }
+                    )
+            }),
+    })
     @GetMapping("/epsg2180")
     public ResponseEntity<SatelliteImageDto> getInEPSG2180(
             @Schema(description = "Width of the initial image to be cropped in pixels", example = "1000", requiredMode = Schema.RequiredMode.REQUIRED)
@@ -88,6 +117,35 @@ public class GeoportalSatelliteController {
         return ResponseEntity.ok(geoportalService.getSatelliteImageEPSG2180(width, minx, miny, maxx, maxy));
     }
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved question checks list for chosen audit"),
+            @ApiResponse(responseCode = "400", description = "BBOX coordinates has different ratio than requested image", content = {
+                    @Content(
+                            examples = {
+                                    @ExampleObject(
+                                            value = "{" +
+                                                    "\"message\": \"BBOX and width/height ratio is different!\"," +
+                                                    "\"statusCode\": \"400\"," +
+                                                    "\"errors\": {\"WrongInputDataException\": \"BBOX and width/height ratio is different!\"}" +
+                                                    "}"
+                                    )
+                            }
+                    )
+            }),
+            @ApiResponse(responseCode = "408", description = "Geoportal API timeout", content = {
+                    @Content(
+                            examples = {
+                                    @ExampleObject(
+                                            value = "{" +
+                                                    "\"message\": \"Geoportal API timeout\"," +
+                                                    "\"statusCode\": \"408\"," +
+                                                    "\"errors\": {\"GeoportalTimeoutException\": \"Error message\"}" +
+                                                    "}"
+                                    )
+                            }
+                    )
+            }),
+    })
     @GetMapping("/crs84")
     public ResponseEntity<SatelliteImageDto> getInCRS84(
             @Schema(description = "Width of the initial image to be cropped in pixels", example = "1000", requiredMode = Schema.RequiredMode.REQUIRED)
