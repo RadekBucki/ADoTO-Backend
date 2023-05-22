@@ -1,7 +1,9 @@
 package pl.ioad.adoto.communication.geoportal.service;
 
+import lombok.AllArgsConstructor;
 import okhttp3.ResponseBody;
 import org.springframework.stereotype.Service;
+import pl.ioad.adoto.backend.coordinates.converter.CoordinatesConverter;
 import pl.ioad.adoto.communication.geoportal.api.GeoportalAPI;
 import pl.ioad.adoto.communication.geoportal.api.GeoportalAPIBuilder;
 import pl.ioad.adoto.communication.geoportal.exception.GeoportalTimeoutException;
@@ -18,12 +20,17 @@ import java.util.Base64;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class GeoportalAPIService {
 
     private final GeoportalAPI geoportalAPI = GeoportalAPIBuilder.build();
 
-    public List<SatelliteImage> getSatelliteImage(double height, double width, double heightResult, double widthResult,
-                                                  double minx, double miny, double maxx, double maxy) {
+    public List<SatelliteImage> getSatelliteImagesCropped(double width, double heightResult, double widthResult,
+                                                          double minx, double miny, double maxx, double maxy) {
+        double height = width * ((maxx - minx) / (maxy - miny));
+        if (heightResult == 0) {
+            heightResult = height;
+        }
         if (((maxx - minx) / (maxy - miny)) != height / width) {
             throw new WrongInputDataException("BBOX and width/height ratio is different!");
         }

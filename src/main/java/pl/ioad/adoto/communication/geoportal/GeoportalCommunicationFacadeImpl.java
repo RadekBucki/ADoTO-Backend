@@ -17,8 +17,8 @@ public class GeoportalCommunicationFacadeImpl implements GeoportalCommunicationF
     private final BDot10kAPIService bDot10kAPIService;
 
     @Override
-    public List<SatelliteImage> getSatelliteImages(double height, double width, double heightResult, double widthResult, double minx, double miny, double maxx, double maxy) {
-        return geoportalAPIService.getSatelliteImage(height, width, heightResult, widthResult, minx, miny, maxx, maxy);
+    public List<SatelliteImage> getSatelliteImages(double width, double heightResult, double widthResult, double minx, double miny, double maxx, double maxy) {
+        return geoportalAPIService.getSatelliteImagesCropped(width, heightResult, widthResult, minx, miny, maxx, maxy);
     }
 
     @Override

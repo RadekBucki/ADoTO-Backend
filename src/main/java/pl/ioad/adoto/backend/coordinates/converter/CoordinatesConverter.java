@@ -2,7 +2,9 @@ package pl.ioad.adoto.backend.coordinates.converter;
 
 import org.locationtech.proj4j.*;
 import org.springframework.data.util.Pair;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CoordinatesConverter {
     private final CoordinateReferenceSystem crs84;
     private final CoordinateReferenceSystem epsg2180;
