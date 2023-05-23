@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import pl.ioad.adoto.backend.geoportal.logic.service.CoordinatesConverterService;
 
 @RestController
-@RequiredArgsConstructor
 @CrossOrigin
+@RequiredArgsConstructor
 @RequestMapping("/convert/to")
 public class CoordinatesConverterController {
 

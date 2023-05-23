@@ -15,8 +15,8 @@ import pl.ioad.adoto.backend.svg.converter.model.SvgConvertResponse;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @CrossOrigin
+@RequiredArgsConstructor
 @RequestMapping("/geoportal/svgObjects")
 public class GeoportalSvgObjectsController {
 

@@ -15,8 +15,8 @@ import pl.ioad.adoto.backend.geoportal.logic.service.GeoportalService;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @CrossOrigin
+@RequiredArgsConstructor
 @RequestMapping("/geoportal/satellite")
 public class GeoportalSatelliteController {
 
