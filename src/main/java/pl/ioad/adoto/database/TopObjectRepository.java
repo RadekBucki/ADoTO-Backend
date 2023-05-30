@@ -5,7 +5,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pl.ioad.adoto.database.entity.Building;
+import pl.ioad.adoto.database.entity.Field;
+import pl.ioad.adoto.database.entity.Forest;
 import pl.ioad.adoto.database.entity.River;
+import pl.ioad.adoto.database.entity.Road;
 import pl.ioad.adoto.database.entity.TopEntity;
 
 import java.util.List;
@@ -31,17 +34,17 @@ public interface TopObjectRepository<T extends TopEntity> extends JpaRepository<
             @Param("maxX") double x2, @Param("maxY") double y2);
 
     @Query(value = INTERSECTING_ROADS_QUERY, nativeQuery = true)
-    List<River> findIntersectingRoads(
+    List<Road> findIntersectingRoads(
             @Param("minX") double x1, @Param("minY") double y1,
             @Param("maxX") double x2, @Param("maxY") double y2);
 
     @Query(value = INTERSECTING_FORESTS_QUERY, nativeQuery = true)
-    List<River> findIntersectingForests(
+    List<Forest> findIntersectingForests(
             @Param("minX") double x1, @Param("minY") double y1,
             @Param("maxX") double x2, @Param("maxY") double y2);
 
     @Query(value = INTERSECTING_FIELDS_QUERY, nativeQuery = true)
-    List<River> findIntersectingFields(
+    List<Field> findIntersectingFields(
             @Param("minX") double x1, @Param("minY") double y1,
             @Param("maxX") double x2, @Param("maxY") double y2);
 }
