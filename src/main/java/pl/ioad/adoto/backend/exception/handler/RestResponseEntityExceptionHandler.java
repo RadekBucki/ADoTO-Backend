@@ -1,5 +1,6 @@
 package pl.ioad.adoto.backend.exception.handler;
 
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -50,7 +51,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
                         HttpStatus.REQUEST_TIMEOUT.value(), Map.of(exc.getClass().getSimpleName(), exc.getMessage())));
     }
 
-    @ExceptionHandler({WrongInputDataException.class, ResponseFailedException.class})
+    @ExceptionHandler({WrongInputDataException.class, ResponseFailedException.class, ConstraintViolationException.class})
     public ResponseEntity<ErrorResponse> handleWrongInputDataException(Exception exc) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse(exc.getMessage(),
