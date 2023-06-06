@@ -7,7 +7,6 @@ import pl.ioad.adoto.backend.coordinates.converter.CoordinatesConverter;
 import pl.ioad.adoto.backend.geoportal.logic.mapper.SatelliteImageDtoMapper;
 import pl.ioad.adoto.backend.geoportal.logic.model.dto.SatelliteImageDto;
 import pl.ioad.adoto.backend.geoportal.logic.service.layers.Layer;
-import pl.ioad.adoto.backend.geoportal.logic.validation.LayerEnum;
 import pl.ioad.adoto.backend.svg.converter.SvgConverter;
 import pl.ioad.adoto.backend.svg.converter.model.SvgConvertResponse;
 import pl.ioad.adoto.communication.geoportal.GeoportalCommunicationFacade;

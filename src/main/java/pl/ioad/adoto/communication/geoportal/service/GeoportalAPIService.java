@@ -3,7 +3,6 @@ package pl.ioad.adoto.communication.geoportal.service;
 import lombok.AllArgsConstructor;
 import okhttp3.ResponseBody;
 import org.springframework.stereotype.Service;
-import pl.ioad.adoto.backend.coordinates.converter.CoordinatesConverter;
 import pl.ioad.adoto.communication.geoportal.api.GeoportalAPI;
 import pl.ioad.adoto.communication.geoportal.api.GeoportalAPIBuilder;
 import pl.ioad.adoto.communication.geoportal.exception.GeoportalTimeoutException;
