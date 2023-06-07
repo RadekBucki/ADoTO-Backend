@@ -12,7 +12,10 @@ import java.util.List;
 public class SvgConverter {
 
     public List<List<SvgConvertResponse>> getCoordinates(List<SvgObject> svgObjects) {
-        return svgObjects.parallelStream().map((this::getCoordinatesOfSpecificObject)).toList();
+        return svgObjects.parallelStream()
+                .filter(svgObject -> svgObject.d().size() > 1)
+                .map((this::getCoordinatesOfSpecificObject))
+                .toList();
     }
 
     private List<SvgConvertResponse> getCoordinatesOfSpecificObject(SvgObject svgObject) {
@@ -27,13 +30,11 @@ public class SvgConverter {
         List<BigDecimal> coordinates = new ArrayList<>();
         List<String> d = svgObject.d();
 
-        for (int i = 0; i < d.size() - 1; i++) {
-            String result = d.get(i);
-            if (i % 2 == 0) {
-                result = d.get(i).substring(1, d.get(i).length() - 1);
-            }
-            coordinates.add(new BigDecimal(result));
-        }
+        d.stream()
+                .filter(s -> !(s.equals("Z") || s.equals("")))
+                .map(s -> Character.isLetter(s.charAt(0)) ? s.substring(1) : s)
+                .map(BigDecimal::new)
+                .forEach(coordinates::add);
 
         List<SvgConvertResponse> response = new ArrayList<>();
 

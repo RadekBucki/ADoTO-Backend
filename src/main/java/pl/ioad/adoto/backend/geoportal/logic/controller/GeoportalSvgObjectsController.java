@@ -8,17 +8,19 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import pl.ioad.adoto.backend.geoportal.logic.service.GeoportalService;
+import pl.ioad.adoto.backend.geoportal.logic.validation.LayerEnum;
+import pl.ioad.adoto.backend.geoportal.logic.validation.ValueOfEnumExist;
 import pl.ioad.adoto.backend.svg.converter.model.SvgConvertResponse;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequiredArgsConstructor
+@Validated
 @RequestMapping("/geoportal/svgObjects")
 public class GeoportalSvgObjectsController {
 
@@ -68,10 +70,10 @@ public class GeoportalSvgObjectsController {
             @RequestParam double maxx,
             @Schema(description = "Maximum Y coordinate of the BBOX", example = "538080", requiredMode = Schema.RequiredMode.REQUIRED)
             @RequestParam double maxy,
-            @Schema(description = "Layer name", example = "BudMJ", requiredMode = Schema.RequiredMode.REQUIRED)
-            @RequestParam String layer
+            @Schema(description = "Layer name", example = "BUILDING", requiredMode = Schema.RequiredMode.REQUIRED)
+            @RequestParam @ValueOfEnumExist(enumClass = LayerEnum.class) String layer
     ) {
-        return ResponseEntity.ok(geoportalService.getSvgObjects(height, width,  minx, miny, maxx, maxy, layer));
+        return ResponseEntity.ok(geoportalService.getSvgObjects(height, width, minx, miny, maxx, maxy, layer));
     }
 
 }
