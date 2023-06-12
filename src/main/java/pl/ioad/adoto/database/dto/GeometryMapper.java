@@ -6,7 +6,7 @@ import java.awt.geom.Point2D;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class GeometryMapper {
+public abstract class GeometryMapper {
 
     public static GeometryDTO mapObjectToDto(Geometry geometry) {
         if (!validateGeometryType(geometry.getGeometryType()))
