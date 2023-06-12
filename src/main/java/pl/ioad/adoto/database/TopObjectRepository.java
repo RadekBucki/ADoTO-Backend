@@ -18,7 +18,6 @@ public interface TopObjectRepository<T extends TopEntity> extends JpaRepository<
     String INTERSECTING_RIVERS_QUERY = "SELECT * FROM rivers WHERE ST_Intersects(wkb_geometry, ST_MakeEnvelope(:minX, :minY, :maxX, :maxY, 4326))";
     String INTERSECTING_ROADS_QUERY = "SELECT * FROM roads WHERE ST_Intersects(wkb_geometry, ST_MakeEnvelope(:minX, :minY, :maxX, :maxY, 4326))";
     String INTERSECTING_FORESTS_QUERY = "SELECT * FROM forests WHERE ST_Intersects(wkb_geometry, ST_MakeEnvelope(:minX, :minY, :maxX, :maxY, 4326))";
-    String INTERSECTING_FIELDS_QUERY = "SELECT * FROM fields WHERE ST_Intersects(wkb_geometry, ST_MakeEnvelope(:minX, :minY, :maxX, :maxY, 4326))";
 
     @Query(value = INTERSECTING_BUILDINGS_QUERY, nativeQuery = true)
     List<Building> findIntersectingBuildings(
@@ -37,11 +36,6 @@ public interface TopObjectRepository<T extends TopEntity> extends JpaRepository<
 
     @Query(value = INTERSECTING_FORESTS_QUERY, nativeQuery = true)
     List<River> findIntersectingForests(
-            @Param("minX") double x1, @Param("minY") double y1,
-            @Param("maxX") double x2, @Param("maxY") double y2);
-
-    @Query(value = INTERSECTING_FIELDS_QUERY, nativeQuery = true)
-    List<River> findIntersectingFields(
             @Param("minX") double x1, @Param("minY") double y1,
             @Param("maxX") double x2, @Param("maxY") double y2);
 }
