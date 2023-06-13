@@ -84,41 +84,40 @@ public class DBService {
         var yStep = (maxY - minY) / WINDOW_WIDTH;
 
         var geoX = x.stream().map(xCord -> minX + (xCord * xStep)).toList();
-        var geoY = y.stream().map(yCord -> minY +  (yCord * yStep)).toList();
+        var geoY = y.stream().map(yCord -> minY + ((WINDOW_WIDTH - yCord) * yStep)).toList();
 
         List<Coordinate> coordinates = new ArrayList<>();
-        for (int i = 0; i < geoX.size(); i++) {
+
+        for (int i = 0; i < geoX.size(); i++)
             coordinates.add(new Coordinate(geoX.get(i), geoY.get(i)));
-        }
+
 
         if (entitiesType.equals(EntitiesType.HOUSE) || entitiesType.equals(EntitiesType.FOREST))
             coordinates.add(new Coordinate(geoX.get(0), geoY.get(0)));
-
-        var coords = coordinates.toArray(Coordinate[]::new);
 
         var geometryFactory = new GeometryFactory();
 
         switch (entitiesType) {
             case HOUSE -> {
-                var polygon = new GeometryFactory().createPolygon(coords);
+                var polygon = new GeometryFactory().createPolygon(coordinates.toArray(Coordinate[]::new));
                 var building = new PredictedBuilding();
                 building.setGeometry(polygon);
                 return buildingsRepository.save(building);
             }
             case FOREST -> {
-                var polygon = new GeometryFactory().createLinearRing(coords);
+                var polygon = new GeometryFactory().createLinearRing(coordinates.toArray(Coordinate[]::new));
                 var forest = new PredictedForest();
                 forest.setGeometry(polygon);
                 return forestsRepository.save(forest);
             }
             case WATER -> {
-                var lineString = geometryFactory.createLineString(coords);
+                var lineString = geometryFactory.createLineString(coordinates.toArray(Coordinate[]::new));
                 var river = new PredictedRiver();
                 river.setGeometry(lineString);
                 return riversRepository.save(river);
             }
             case ROADS -> {
-                var lineString = geometryFactory.createLineString(coords);
+                var lineString = geometryFactory.createLineString(coordinates.toArray(Coordinate[]::new));
                 var road = new PredictedRoad();
                 road.setGeometry(lineString);
                 return roadsRepository.save(road);

@@ -34,6 +34,8 @@ public class AiController {
             @Schema(description = "Layer name", example = "BUILDING", requiredMode = Schema.RequiredMode.REQUIRED)
             @RequestParam @ValueOfEnumExist(enumClass = LayerEnum.class) String layer
     ) {
-        return ResponseEntity.ok(aiService.getAiResults(width, minx, miny, maxx, maxy, layer));
+        var result = aiService.getAiResults(width, minx, miny, maxx, maxy, layer);
+
+        return ResponseEntity.ok(result);
     }
 }
