@@ -1,4 +1,4 @@
-package pl.ioad.adoto.backend.geoportal.logic.service.layers;
+package pl.ioad.adoto.backend.layers;
 
 import org.springframework.stereotype.Component;
 
@@ -7,5 +7,10 @@ public class WaterLayer implements Layer {
     @Override
     public String getLayersSpell() {
         return "WPow";
+    }
+
+    @Override
+    public String getAiSpell() {
+        return "water";
     }
 }
