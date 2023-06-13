@@ -1,4 +1,4 @@
-package pl.ioad.adoto.backend.coordinates.converter;
+package pl.ioad.adoto.backend.coordinates.converter.service;
 
 import org.locationtech.proj4j.*;
 import org.springframework.data.util.Pair;
