@@ -13,7 +13,7 @@ public class AICommunicationFacadeImpl implements AICommunicationFacade {
 
     private final AiAPIService aiAPIService;
     @Override
-    public List<List<AiResult>> getAiResults(double width, double minx, double miny, double maxx, double maxy, String layer) {
-        return aiAPIService.getAiResult(width, minx, miny, maxx, maxy, layer);
+    public List<List<AiResult>> getAiResults(double width, String layer, String base64Image) {
+        return aiAPIService.getAiResult(width, layer, base64Image);
     }
 }

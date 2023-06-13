@@ -16,14 +16,11 @@ public class AiAPIService {
 
     public List<List<AiResult>> getAiResult(
             double width,
-            double minx,
-            double miny,
-            double maxx,
-            double maxy,
-            String layer
+            String layer,
+            String base64Image
     ) {
         try {
-            return aiAPI.getAiResults(width, minx, miny, maxx, maxy, layer).execute().body();
+            return aiAPI.getAiResults(width, layer, base64Image).execute().body();
         } catch (IOException e) {
             throw new AiResponseFailedException("Failed to get AI results");
         }
