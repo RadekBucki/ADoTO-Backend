@@ -31,17 +31,35 @@ public class DBService {
 
     private final int WINDOW_WIDTH = 1000;
 
-    public List<TopObjectDTO> findAllInBoundingBox(EntitiesType entitiesType,
+    public List<TopObjectDTO> findAllInBoundingBoxWithCRS84(EntitiesType entitiesType,
                                                    Double minX,
                                                    Double minY,
                                                    Double maxX,
                                                    Double maxY) {
 
         var intersectingEntities = switch (entitiesType) {
-            case HOUSE -> buildingsRepository.findIntersectingBuildings(minX, minY, maxX, maxY);
-            case WATER -> riversRepository.findIntersectingRivers(minX, minY, maxX, maxY);
-            case ROADS -> roadsRepository.findIntersectingRoads(minX, minY, maxX, maxY);
-            case FOREST -> forestsRepository.findIntersectingForests(minX, minY, maxX, maxY);
+            case HOUSE -> buildingsRepository.findIntersectingBuildingsInCRS84(minX, minY, maxX, maxY);
+            case WATER -> riversRepository.findIntersectingRiversInCRS84(minX, minY, maxX, maxY);
+            case ROADS -> roadsRepository.findIntersectingRoadsInCRS84(minX, minY, maxX, maxY);
+            case FOREST -> forestsRepository.findIntersectingForestsInCRS84(minX, minY, maxX, maxY);
+        };
+
+        return intersectingEntities.stream()
+                .map(entity -> new TopObjectDTO(entity.getId(), mapObjectToDto(entity.getGeometry())))
+                .toList();
+    }
+
+    public List<TopObjectDTO> findAllInBoundingBoxWithEPSG2180(EntitiesType entitiesType,
+                                                   Double minX,
+                                                   Double minY,
+                                                   Double maxX,
+                                                   Double maxY) {
+
+        var intersectingEntities = switch (entitiesType) {
+            case HOUSE -> buildingsRepository.findIntersectingBuildingsInEPSG2180(minX, minY, maxX, maxY);
+            case WATER -> riversRepository.findIntersectingRiversInEPSG2180(minX, minY, maxX, maxY);
+            case ROADS -> roadsRepository.findIntersectingRoadsInEPSG2180(minX, minY, maxX, maxY);
+            case FOREST -> forestsRepository.findIntersectingForestsInEPSG2180(minX, minY, maxX, maxY);
         };
 
         return intersectingEntities.stream()
