@@ -1,9 +1,8 @@
-package pl.ioad.adoto.backend.geoportal.logic.service;
+package pl.ioad.adoto.backend.coordinates.converter.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
-import pl.ioad.adoto.backend.coordinates.converter.CoordinatesConverter;
 
 @Service
 @RequiredArgsConstructor

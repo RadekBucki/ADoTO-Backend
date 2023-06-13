@@ -1,4 +1,4 @@
-package pl.ioad.adoto.backend.geoportal.logic.controller;
+package pl.ioad.adoto.backend.coordinates.converter.controller;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Pair;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.ioad.adoto.backend.geoportal.logic.service.CoordinatesConverterService;
+import pl.ioad.adoto.backend.coordinates.converter.service.CoordinatesConverterService;
 
 @RestController
 @CrossOrigin

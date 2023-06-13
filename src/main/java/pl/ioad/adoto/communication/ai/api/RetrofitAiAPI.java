@@ -1,17 +1,17 @@
-package pl.ioad.adoto.communication.geoportal.api;
+package pl.ioad.adoto.communication.ai.api;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Retrofit;
-import retrofit2.converter.jaxb.JaxbConverterFactory;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.util.concurrent.TimeUnit;
 
-public interface RetrofitAPI {
+public interface RetrofitAiAPI {
 
     static Retrofit api() {
         return new Retrofit.Builder()
-                .baseUrl("https://mapy.geoportal.gov.pl")
+                .baseUrl("http://localhost:5000")
                 .client(new OkHttpClient.Builder()
                         .connectTimeout(300, TimeUnit.SECONDS)
                         .readTimeout(300, TimeUnit.SECONDS)
@@ -22,7 +22,7 @@ public interface RetrofitAPI {
                             return chain.proceed(requestBuilder);
                         })
                         .build())
-                .addConverterFactory(JaxbConverterFactory.create())
+                .addConverterFactory(JacksonConverterFactory.create())
                 .build();
     }
 }

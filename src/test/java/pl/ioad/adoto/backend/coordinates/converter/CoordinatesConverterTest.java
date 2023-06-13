@@ -2,6 +2,7 @@ package pl.ioad.adoto.backend.coordinates.converter;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.data.util.Pair;
+import pl.ioad.adoto.backend.coordinates.converter.service.CoordinatesConverter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
