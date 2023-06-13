@@ -9,6 +9,7 @@ spring:
     url: ${POSTGRES_URL}
   jpa:
     show-sql: true
+    hibernate.ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
