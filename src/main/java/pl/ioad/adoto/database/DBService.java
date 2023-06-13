@@ -78,7 +78,7 @@ public class DBService {
                                     Double minY,
                                     Double maxX,
                                     Double maxY,
-                                    EntitiesType entitiesType) {
+                                    String entitiesType) {
 
         var xStep = (maxX - minX) / WINDOW_WIDTH;
         var yStep = (maxY - minY) / WINDOW_WIDTH;
@@ -92,31 +92,31 @@ public class DBService {
             coordinates.add(new Coordinate(geoX.get(i), geoY.get(i)));
 
 
-        if (entitiesType.equals(EntitiesType.HOUSE) || entitiesType.equals(EntitiesType.FOREST))
+        if (entitiesType.equals("BUILDING") || entitiesType.equals("FOREST"))
             coordinates.add(new Coordinate(geoX.get(0), geoY.get(0)));
 
         var geometryFactory = new GeometryFactory();
 
         switch (entitiesType) {
-            case HOUSE -> {
+            case "BUILDING" -> {
                 var polygon = new GeometryFactory().createPolygon(coordinates.toArray(Coordinate[]::new));
                 var building = new PredictedBuilding();
                 building.setGeometry(polygon);
                 return buildingsRepository.save(building);
             }
-            case FOREST -> {
+            case "FOREST" -> {
                 var polygon = new GeometryFactory().createLinearRing(coordinates.toArray(Coordinate[]::new));
                 var forest = new PredictedForest();
                 forest.setGeometry(polygon);
                 return forestsRepository.save(forest);
             }
-            case WATER -> {
+            case "WATER" -> {
                 var lineString = geometryFactory.createLineString(coordinates.toArray(Coordinate[]::new));
                 var river = new PredictedRiver();
                 river.setGeometry(lineString);
                 return riversRepository.save(river);
             }
-            case ROADS -> {
+            case "ROAD" -> {
                 var lineString = geometryFactory.createLineString(coordinates.toArray(Coordinate[]::new));
                 var road = new PredictedRoad();
                 road.setGeometry(lineString);
@@ -125,5 +125,6 @@ public class DBService {
             default -> throw new IllegalStateException("Unexpected value: " + entitiesType);
         }
     }
+
 }
 
