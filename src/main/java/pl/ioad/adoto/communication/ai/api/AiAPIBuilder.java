@@ -3,12 +3,12 @@ package pl.ioad.adoto.communication.ai.api;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AiAPIBuilder implements RetrofitAPI {
+public class AiAPIBuilder implements RetrofitAiAPI {
     private AiAPIBuilder() {
         super();
     }
 
     public static AiAPI build() {
-        return RetrofitAPI.api().create(AiAPI.class);
+        return RetrofitAiAPI.api().create(AiAPI.class);
     }
 }
