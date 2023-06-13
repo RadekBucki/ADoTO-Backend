@@ -2,6 +2,7 @@ package pl.ioad.adoto.database;
 
 import com.google.common.collect.Streams;
 import lombok.RequiredArgsConstructor;
+import org.checkerframework.checker.units.qual.C;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Polygon;
@@ -17,6 +18,8 @@ import pl.ioad.adoto.database.entity.sample.Forest;
 import pl.ioad.adoto.database.entity.sample.River;
 import pl.ioad.adoto.database.entity.sample.Road;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static pl.ioad.adoto.database.dto.GeometryMapper.mapObjectToDto;
@@ -79,25 +82,31 @@ public class DBService {
 
         var xStep = (maxX - minX) / WINDOW_WIDTH;
         var yStep = (maxY - minY) / WINDOW_WIDTH;
-        System.out.println(xStep + " " + yStep);
 
-        var geoX = x.stream().map(xCoord -> xCoord * xStep).toList();
-        var geoY = y.stream().map(yCoord -> yCoord * yStep).toList();
-        var coords = Streams.zip(geoX.stream(), geoY.stream(), Coordinate::new).toArray(Coordinate[]::new);
+        var geoX = x.stream().map(xCord -> minX + (xCord * xStep)).toList();
+        var geoY = y.stream().map(yCord -> minY +  (yCord * yStep)).toList();
+
+        List<Coordinate> coordinates = new ArrayList<>();
+        for (int i = 0; i < geoX.size(); i++) {
+            coordinates.add(new Coordinate(geoX.get(i), geoY.get(i)));
+        }
+
+        if (entitiesType.equals(EntitiesType.HOUSE) || entitiesType.equals(EntitiesType.FOREST))
+            coordinates.add(new Coordinate(geoX.get(0), geoY.get(0)));
+
+        var coords = coordinates.toArray(Coordinate[]::new);
 
         var geometryFactory = new GeometryFactory();
 
         switch (entitiesType) {
             case HOUSE -> {
-                var shell = new GeometryFactory().createLinearRing(coords);
-                var polygon = new Polygon(shell, null, geometryFactory);
+                var polygon = new GeometryFactory().createPolygon(coords);
                 var building = new PredictedBuilding();
                 building.setGeometry(polygon);
                 return buildingsRepository.save(building);
             }
             case FOREST -> {
-                var shell = new GeometryFactory().createLinearRing(coords);
-                var polygon = new Polygon(shell, null, geometryFactory);
+                var polygon = new GeometryFactory().createLinearRing(coords);
                 var forest = new PredictedForest();
                 forest.setGeometry(polygon);
                 return forestsRepository.save(forest);
