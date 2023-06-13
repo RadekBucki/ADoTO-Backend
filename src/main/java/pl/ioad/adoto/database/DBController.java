@@ -28,7 +28,7 @@ public class DBController {
                                                                           @RequestParam Double maxX,
                                                                           @RequestParam Double maxY) {
         return new ResponseEntity<>(
-                dbService.findAllInBoundingBox(entitiesType, minX, minY, maxX, maxY),
+                dbService.findAllInBoundingBoxWithCRS84(entitiesType, minX, minY, maxX, maxY),
                 OK
         );
     }
