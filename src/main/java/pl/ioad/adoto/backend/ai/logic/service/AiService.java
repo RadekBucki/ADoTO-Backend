@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.ioad.adoto.backend.layers.Layer;
 import pl.ioad.adoto.communication.ai.AICommunicationFacade;
 import pl.ioad.adoto.communication.ai.model.AiResult;
+import pl.ioad.adoto.database.DBService;
 
 import java.util.List;
 import java.util.Map;
