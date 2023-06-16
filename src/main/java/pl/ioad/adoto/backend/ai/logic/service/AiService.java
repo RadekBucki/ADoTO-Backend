@@ -7,6 +7,7 @@ import pl.ioad.adoto.backend.layers.Layer;
 import pl.ioad.adoto.communication.ai.AICommunicationFacade;
 import pl.ioad.adoto.communication.ai.model.AiResult;
 import pl.ioad.adoto.database.DBService;
+import pl.ioad.adoto.database.entity.EntitiesType;
 
 
 import java.util.List;
@@ -23,12 +24,14 @@ public class AiService {
     public List<List<AiResult>> getAiResults(AiRequest aiRequest) {
         var aiResults = aiCommunicationFacade.getAiResults(aiRequest.width(),
                 layers.get(aiRequest.layer()).getAiSpell(), aiRequest.base64Image());
-        if (aiResults != null && !aiResults.isEmpty())
+
+        if (aiResults != null && !aiResults.isEmpty()) {
             aiResults.forEach(res -> dbService.savePrediction(
                     res.stream().map(AiResult::x).toList(),
                     res.stream().map(AiResult::y).toList(),
                     aiRequest.miny(), aiRequest.minx(), aiRequest.maxy(), aiRequest.maxx(),
-                    aiRequest.layer()));
+                    EntitiesType.valueOf(aiRequest.layer())));
+        }
 
         return aiResults;
     }

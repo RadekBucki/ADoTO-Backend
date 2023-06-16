@@ -1,8 +1,8 @@
 package pl.ioad.adoto.database.entity;
 
 public enum EntitiesType {
-    HOUSE,
+    BUILDING,
     WATER,
-    ROADS,
+    ROAD,
     FOREST
 }
