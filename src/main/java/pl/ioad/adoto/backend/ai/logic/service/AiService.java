@@ -2,11 +2,12 @@ package pl.ioad.adoto.backend.ai.logic.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.ioad.adoto.backend.ai.logic.model.AiRequest;
 import pl.ioad.adoto.backend.layers.Layer;
 import pl.ioad.adoto.communication.ai.AICommunicationFacade;
-import pl.ioad.adoto.communication.ai.exception.AiResponseFailedException;
 import pl.ioad.adoto.communication.ai.model.AiResult;
 import pl.ioad.adoto.database.DBService;
+
 
 import java.util.List;
 import java.util.Map;
@@ -19,16 +20,16 @@ public class AiService {
     private final DBService dbService;
     private final Map<String, Layer> layers;
 
-    public List<List<AiResult>> getAiResults(double width, double minx, double miny, double maxx, double maxy, String layer) {
-        var aiResults = aiCommunicationFacade.getAiResults(width, minx, miny, maxx, maxy, layers.get(layer).getAiSpell());
-        if (aiResults == null)
-            throw new AiResponseFailedException("Failed occur while generating AI results");
+    public List<List<AiResult>> getAiResults(AiRequest aiRequest) {
+        var aiResults = aiCommunicationFacade.getAiResults(aiRequest.width(),
+                layers.get(aiRequest.layer()).getAiSpell(), aiRequest.base64Image());
+        if (aiResults != null && !aiResults.isEmpty())
+            aiResults.forEach(res -> dbService.savePrediction(
+                    res.stream().map(AiResult::x).toList(),
+                    res.stream().map(AiResult::y).toList(),
+                    aiRequest.miny(), aiRequest.minx(), aiRequest.maxy(), aiRequest.maxx(),
+                    aiRequest.layer()));
 
-        aiResults.forEach(res -> dbService.savePrediction(
-                res.stream().map(AiResult::x).toList(),
-                res.stream().map(AiResult::y).toList(),
-                miny, minx, maxy, maxx,
-                layer));
         return aiResults;
     }
 }
