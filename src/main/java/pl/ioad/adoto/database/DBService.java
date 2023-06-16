@@ -1,25 +1,18 @@
 package pl.ioad.adoto.database;
 
-import com.google.common.collect.Streams;
 import lombok.RequiredArgsConstructor;
-import org.checkerframework.checker.units.qual.C;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.Polygon;
 import org.springframework.stereotype.Service;
+import pl.ioad.adoto.communication.geoportal.exception.WrongInputDataException;
 import pl.ioad.adoto.database.dto.TopObjectDTO;
-import pl.ioad.adoto.database.entity.*;
+import pl.ioad.adoto.database.entity.EntitiesType;
 import pl.ioad.adoto.database.entity.predicted.PredictedBuilding;
 import pl.ioad.adoto.database.entity.predicted.PredictedForest;
 import pl.ioad.adoto.database.entity.predicted.PredictedRiver;
 import pl.ioad.adoto.database.entity.predicted.PredictedRoad;
-import pl.ioad.adoto.database.entity.sample.Building;
-import pl.ioad.adoto.database.entity.sample.Forest;
-import pl.ioad.adoto.database.entity.sample.River;
-import pl.ioad.adoto.database.entity.sample.Road;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static pl.ioad.adoto.database.dto.GeometryMapper.mapObjectToDto;
@@ -72,14 +65,13 @@ public class DBService {
                 .toList();
     }
 
-    public TopEntity savePrediction(List<Double> x,
+    public void savePrediction(List<Double> x,
                                     List<Double> y,
                                     Double minX,
                                     Double minY,
                                     Double maxX,
                                     Double maxY,
                                     String entitiesType) {
-
         var xStep = (maxX - minX) / WINDOW_WIDTH;
         var yStep = (maxY - minY) / WINDOW_WIDTH;
 
@@ -102,27 +94,27 @@ public class DBService {
                 var polygon = new GeometryFactory().createPolygon(coordinates.toArray(Coordinate[]::new));
                 var building = new PredictedBuilding();
                 building.setGeometry(polygon);
-                return buildingsRepository.save(building);
+                buildingsRepository.save(building);
             }
             case "FOREST" -> {
                 var polygon = new GeometryFactory().createLinearRing(coordinates.toArray(Coordinate[]::new));
                 var forest = new PredictedForest();
                 forest.setGeometry(polygon);
-                return forestsRepository.save(forest);
+                forestsRepository.save(forest);
             }
             case "WATER" -> {
                 var lineString = geometryFactory.createLineString(coordinates.toArray(Coordinate[]::new));
                 var river = new PredictedRiver();
                 river.setGeometry(lineString);
-                return riversRepository.save(river);
+                riversRepository.save(river);
             }
             case "ROAD" -> {
                 var lineString = geometryFactory.createLineString(coordinates.toArray(Coordinate[]::new));
                 var road = new PredictedRoad();
                 road.setGeometry(lineString);
-                return roadsRepository.save(road);
+                roadsRepository.save(road);
             }
-            default -> throw new IllegalStateException("Unexpected value: " + entitiesType);
+            default -> throw new WrongInputDataException("Unexpected value: " + entitiesType);
         }
     }
 
