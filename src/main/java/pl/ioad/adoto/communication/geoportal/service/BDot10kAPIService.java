@@ -51,9 +51,9 @@ public class BDot10kAPIService {
             }
 
             String body = response.body().string();
-            String[] split = body.split("<g id");
-            List<String> elements = Arrays.asList(split);
-            elements = elements.stream().filter(x -> x.contains("path")).toList();
+            String[] split = body.split("<g");
+            List<String> elements = Arrays.stream(split).map(x -> x.replace("id", "")).toList();
+            elements = elements.stream().filter(x -> x.contains("path") || x.contains("pattern")).toList();
 
             List<String> splitElements = new ArrayList<>();
             for (String elem : elements) {
