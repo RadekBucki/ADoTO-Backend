@@ -1,7 +1,6 @@
 package pl.ioad.adoto.database;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +11,8 @@ import pl.ioad.adoto.database.dto.TopObjectDTO;
 import pl.ioad.adoto.database.entity.EntitiesType;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/db")
@@ -27,8 +28,8 @@ public class DBController {
                                                                           @RequestParam Double maxX,
                                                                           @RequestParam Double maxY) {
         return new ResponseEntity<>(
-                dbService.findAllInBoundingBox(entitiesType, minX, minY, maxX, maxY),
-                HttpStatus.OK
+                dbService.findAllInBoundingBoxWithCRS84(entitiesType, minX, minY, maxX, maxY),
+                OK
         );
     }
 }

@@ -6,6 +6,9 @@ import pl.ioad.adoto.backend.ai.logic.model.AiRequest;
 import pl.ioad.adoto.backend.layers.Layer;
 import pl.ioad.adoto.communication.ai.AICommunicationFacade;
 import pl.ioad.adoto.communication.ai.model.AiResult;
+import pl.ioad.adoto.database.DBService;
+import pl.ioad.adoto.database.entity.EntitiesType;
+
 
 import java.util.List;
 import java.util.Map;
@@ -15,9 +18,21 @@ import java.util.Map;
 public class AiService {
 
     private final AICommunicationFacade aiCommunicationFacade;
+    private final DBService dbService;
     private final Map<String, Layer> layers;
 
     public List<List<AiResult>> getAiResults(AiRequest aiRequest) {
-        return aiCommunicationFacade.getAiResults(aiRequest.width(), layers.get(aiRequest.layer()).getAiSpell(), aiRequest.base64Image());
+        var aiResults = aiCommunicationFacade.getAiResults(aiRequest.width(),
+                layers.get(aiRequest.layer()).getAiSpell(), aiRequest.base64Image());
+
+        if (aiResults != null && !aiResults.isEmpty()) {
+            aiResults.forEach(res -> dbService.savePrediction(
+                    res.stream().map(AiResult::x).toList(),
+                    res.stream().map(AiResult::y).toList(),
+                    aiRequest.miny(), aiRequest.minx(), aiRequest.maxy(), aiRequest.maxx(),
+                    EntitiesType.valueOf(aiRequest.layer())));
+        }
+
+        return aiResults;
     }
 }
