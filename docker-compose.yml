@@ -15,15 +15,8 @@ services:
       - ./src/main/resources/roads.sql:/docker-entrypoint-initdb.d/roads.sql
       - ./src/main/resources/rivers.sql:/docker-entrypoint-initdb.d/rivers.sql
       - ./src/main/resources/forests.sql:/docker-entrypoint-initdb.d/forests.sql
-      - ./src/main/resources/fields.sql:/docker-entrypoint-initdb.d/fields.sql
       - ./src/main/resources/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./src/main/resources/testData.sql:/docker-entrypoint-initdb.d/testData.sql
-  ai:
-    build: ../ADoTO-AI
-    container_name: prediction_module
-    env_file: .env
-    links:
-      - app
   app:
     depends_on:
       db:
@@ -35,5 +28,20 @@ services:
       - '${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}'
     volumes:
       - .m2:/root/.m2
-volumes:
-  db:
+  ai:
+    build: ../ADoTO-AI
+    container_name: prediction_module
+    env_file: .env
+    ports:
+      - '5000:5000'
+    links:
+      - app
+  adoto_frontend:
+    build:
+      context: ../ADoTO-Frontend
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/ADOTO-FRONT
+      - /ADOTO-FRONT/node_modules

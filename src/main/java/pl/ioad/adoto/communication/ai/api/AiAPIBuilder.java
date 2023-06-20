@@ -8,7 +8,7 @@ public class AiAPIBuilder implements RetrofitAiAPI {
         super();
     }
 
-    public static AiAPI build() {
-        return RetrofitAiAPI.api().create(AiAPI.class);
+    public static AiAPI build(String baseUrl) {
+        return RetrofitAiAPI.api(baseUrl).create(AiAPI.class);
     }
 }
