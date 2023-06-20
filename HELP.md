@@ -23,15 +23,11 @@ After this you can build Spring backend locally in your environment:
 Alternatively, for JetBrains Intellij users click green button in opened SolidBackendApplication file
 
 ## 2.) Docker Database and Spring backend
-Before dockerizing you have to create .jar file with command:
-
-> mvn package -DskipTests
-
 To start application within docker containers you can use created docker-compose file
 
 > docker-compose -f docker-compose.yml up
 
-Docker-compose will automatically create database, populate it with test data and start spring backend afterwards.
+Docker-compose will automatically create database, populate it with test data and start spring backend and ai module afterwards.
 No further action is required, Dockerfile is only used to build spring application as the part of the docker-compose.
 
 Alternatively, for JetBrains Intellij users they can use green button on the left in opened docker-compose file.
