@@ -9,9 +9,9 @@ import java.util.concurrent.TimeUnit;
 
 public interface RetrofitAiAPI {
 
-    static Retrofit api() {
+    static Retrofit api(String baseUrl) {
         return new Retrofit.Builder()
-                .baseUrl("http://localhost:5000")
+                .baseUrl(baseUrl)
                 .client(new OkHttpClient.Builder()
                         .connectTimeout(300, TimeUnit.SECONDS)
                         .readTimeout(300, TimeUnit.SECONDS)

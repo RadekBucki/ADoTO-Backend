@@ -1,5 +1,6 @@
 package pl.ioad.adoto.communication.ai.service;
 
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import pl.ioad.adoto.communication.ai.api.AiAPI;
 import pl.ioad.adoto.communication.ai.api.AiAPIBuilder;
@@ -11,8 +12,12 @@ import java.util.List;
 
 @Service
 public class AiAPIService {
+    private final AiAPI aiAPI;
 
-    private final AiAPI aiAPI = AiAPIBuilder.build();
+    public AiAPIService(Environment environment) {
+
+        this.aiAPI = AiAPIBuilder.build(environment.getProperty("AI_API_URL"));
+    }
 
     public List<List<AiResult>> getAiResult(
             double width,

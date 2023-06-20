@@ -32,6 +32,8 @@ services:
     build: ../ADoTO-AI
     container_name: prediction_module
     env_file: .env
+    ports:
+      - '5000:5000'
     links:
       - app
   adoto_frontend:
